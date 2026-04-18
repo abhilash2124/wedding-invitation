@@ -1,141 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation - Ushasri & Anish</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;500&display=swap"
-        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Wedding Invitation – Ushasri & Anish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ivory:   #FBF7F0;
+            --parch:   #F3EBD9;
+            --gold:    #C9973A;
+            --gold-lt: #E8C47A;
+            --mahog:   #5C2E0E;
+            --umber:   #8B5E3C;
+            --muted:   #9C8270;
+            --text:    #3D2B1A;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Lora', serif;
+            background: var(--ivory);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 300;
+            overflow-x: hidden;
         }
 
-        .heading {
-            font-family: 'Cinzel', serif;
+        /* ─── HERO ──────────────────────────────────────── */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px 24px 60px;
+            position: relative;
+            background: var(--ivory);
+            overflow: hidden;
         }
 
-        .sans {
-            font-family: 'Montserrat', sans-serif;
+        /* Silk-texture radial glow */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% 30%, rgba(201,151,58,.12) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 60% at 80% 80%, rgba(201,151,58,.06) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        .animate-fade-up {
-            animation: fadeUp 1.5s ease-out forwards;
+        /* Corner mandala lines */
+        .corner {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: .35;
+        }
+        .corner--tl { top: 0; left: 0; }
+        .corner--tr { top: 0; right: 0; transform: scaleX(-1); }
+        .corner--bl { bottom: 0; left: 0; transform: scaleY(-1); }
+        .corner--br { bottom: 0; right: 0; transform: scale(-1); }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 420px;
+            width: 100%;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .eyebrow {
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+            font-size: 10px;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--umber);
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: rise .9s .2s ease-out forwards;
         }
 
-        .bg-cream {
-            background-color: #FDFBF7;
+        .divider-ornament {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            margin: 20px 0;
+            opacity: 0;
+            animation: rise .9s .5s ease-out forwards;
+        }
+        .divider-ornament span {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .names {
+            font-family: 'IM Fell English', Georgia, serif;
+            font-size: clamp(38px, 10vw, 58px);
+            line-height: 1.15;
+            color: var(--mahog);
+            font-style: italic;
+            opacity: 0;
+            animation: rise 1.1s .35s ease-out forwards;
+        }
+        .names em {
+            font-size: .45em;
+            font-style: normal;
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            color: var(--gold);
+            letter-spacing: .1em;
+            margin: 6px 0;
+        }
+
+        .tagline {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--muted);
+            max-width: 280px;
+            margin: 24px auto 0;
+            line-height: 1.7;
+            opacity: 0;
+            animation: rise .9s .65s ease-out forwards;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            animation: rise .9s 1.2s ease-out forwards;
+        }
+        .scroll-hint span {
+            font-family: 'Jost', sans-serif;
+            font-size: 9px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .scroll-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(8px); }
+        }
+
+        /* ─── SECTION WRAPPER ───────────────────────────── */
+        .section {
+            padding: 64px 24px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'Jost', sans-serif;
+            font-size: 9px;
+            font-weight: 300;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'IM Fell English', Georgia, serif;
+            font-size: clamp(26px, 7vw, 34px);
+            color: var(--mahog);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        /* ─── COUNTDOWN ─────────────────────────────────── */
+        .countdown-wrap {
+            background: var(--parch);
+            padding: 48px 24px 56px;
+        }
+        .countdown-inner {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 28px;
+        }
+        .timer-cell {
+            text-align: center;
+            background: var(--ivory);
+            border-radius: 12px;
+            padding: 16px 4px 14px;
+            border: 1px solid rgba(201,151,58,.25);
+            box-shadow: 0 2px 12px rgba(92,46,14,.06);
+        }
+        .timer-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--mahog);
+            line-height: 1;
+            display: block;
+        }
+        .timer-label {
+            font-family: 'Jost', sans-serif;
+            font-size: 8px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* ─── EVENT CARDS ───────────────────────────────── */
+        .event-card {
+            background: var(--ivory);
+            border: 1px solid rgba(201,151,58,.2);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(92,46,14,.07);
+            margin-bottom: 16px;
+        }
+        .event-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        .event-name {
+            font-family: 'IM Fell English', serif;
+            font-size: 20px;
+            color: var(--mahog);
+            margin-bottom: 6px;
+        }
+        .event-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            color: var(--text);
+            font-style: italic;
+        }
+        .event-time {
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: .15em;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .muhurtham-badge {
+            display: inline-block;
+            margin-top: 10px;
+            background: rgba(201,151,58,.12);
+            border: 1px solid rgba(201,151,58,.35);
+            color: var(--umber);
+            font-family: 'Jost', sans-serif;
+            font-size: 9px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 50px;
+        }
+
+        /* ─── VENUE ─────────────────────────────────────── */
+        .venue-block {
+            text-align: center;
+        }
+        .venue-name {
+            font-family: 'IM Fell English', serif;
+            font-size: 22px;
+            color: var(--mahog);
+            margin-bottom: 6px;
+        }
+        .venue-addr {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 28px auto 0;
+            background: var(--mahog);
+            color: #fff;
+            font-family: 'Jost', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            transition: background .2s, transform .15s;
+            box-shadow: 0 4px 18px rgba(92,46,14,.22);
+        }
+        .btn-gold:hover { background: #7c3d12; transform: translateY(-1px); }
+
+        .map-frame {
+            margin-top: 28px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 30px rgba(92,46,14,.12);
+            border: 1px solid rgba(201,151,58,.2);
+            width: 100%;
+            aspect-ratio: 4/3;
+        }
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        /* ─── FAMILY BLESSING ───────────────────────────── */
+        .blessing-wrap {
+            background: var(--parch);
+            text-align: center;
+            padding: 60px 28px;
+        }
+        .blessing-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--umber);
+            line-height: 1.9;
+            max-width: 340px;
+            margin: 0 auto 28px;
+        }
+
+        /* Family names */
+        .families {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            align-items: stretch;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+        .family-col {
+            flex: 1;
+            padding: 20px 12px;
+        }
+        .family-side {
+            font-family: 'Jost', sans-serif;
+            font-size: 8px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .family-name {
+            font-family: 'IM Fell English', serif;
+            font-size: 16px;
+            color: var(--mahog);
+            line-height: 1.4;
+        }
+        .family-divider {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            margin: 20px 0;
+        }
+
+        /* ─── FOOTER ─────────────────────────────────────── */
+        footer {
+            text-align: center;
+            padding: 40px 24px 56px;
+        }
+        footer p {
+            font-family: 'Jost', sans-serif;
+            font-size: 9px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .footer-ornament {
+            margin: 0 auto 16px;
+        }
+
+        /* ─── UTILITY ─────────────────────────────────────── */
+        .gold-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+            margin: 0 auto 40px;
+            max-width: 180px;
+        }
+
+        @media (min-width: 600px) {
+            .hero { padding-top: 80px; }
+            .families { max-width: 420px; }
         }
     </style>
 </head>
 
-<body class="bg-cream text-[#4A4238] selection:bg-amber-100">
+<body>
 
-    <!-- Header / Hero -->
-    <div class="min-h-screen flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
-        <!-- Decorative corners -->
-        <div class="absolute top-0 left-0 p-4 opacity-20">
-            <svg width="120" height="120" viewBox="0 0 100 100">
-                <path d="M0 0 L100 0 M0 0 L0 100" fill="none" stroke="#78350f" stroke-width="2" />
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+    <!-- Corner ornaments -->
+    <svg class="corner corner--tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5 L5 60 M5 5 L60 5" stroke="#C9973A" stroke-width="1.5"/>
+        <path d="M15 15 L15 50 M15 15 L50 15" stroke="#C9973A" stroke-width=".7" opacity=".5"/>
+        <circle cx="5" cy="5" r="3" fill="#C9973A"/>
+        <path d="M25 5 Q35 15 35 25 Q25 25 25 5" fill="rgba(201,151,58,.25)"/>
+        <path d="M5 25 Q15 35 25 35 Q25 25 5 25" fill="rgba(201,151,58,.25)"/>
+    </svg>
+    <svg class="corner corner--tr" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5 L5 60 M5 5 L60 5" stroke="#C9973A" stroke-width="1.5"/>
+        <path d="M15 15 L15 50 M15 15 L50 15" stroke="#C9973A" stroke-width=".7" opacity=".5"/>
+        <circle cx="5" cy="5" r="3" fill="#C9973A"/>
+        <path d="M25 5 Q35 15 35 25 Q25 25 25 5" fill="rgba(201,151,58,.25)"/>
+        <path d="M5 25 Q15 35 25 35 Q25 25 5 25" fill="rgba(201,151,58,.25)"/>
+    </svg>
+    <svg class="corner corner--bl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5 L5 60 M5 5 L60 5" stroke="#C9973A" stroke-width="1.5"/>
+        <circle cx="5" cy="5" r="3" fill="#C9973A"/>
+    </svg>
+    <svg class="corner corner--br" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5 L5 60 M5 5 L60 5" stroke="#C9973A" stroke-width="1.5"/>
+        <circle cx="5" cy="5" r="3" fill="#C9973A"/>
+    </svg>
+
+    <div class="hero-inner">
+        <p class="eyebrow">Together with their families</p>
+
+        <div class="divider-ornament">
+            <span></span>
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+                <path d="M20 4C14 4 10 10 10 18C10 26 14 31 18 34C15 36 11 38 7 40L9 42C13 40 17 38 20 36C23 38 27 40 31 42L33 40C29 38 25 36 22 34C26 31 30 26 30 18C30 10 26 4 20 4Z" fill="#C9973A"/>
             </svg>
+            <span></span>
         </div>
 
-        <div class="animate-fade-up space-y-6">
-            <div class="mb-4">
-                <svg width="60" height="60" viewBox="0 0 100 100" class="mx-auto text-amber-600">
-                    <path fill="currentColor"
-                        d="M50 10C35 10 25 25 25 40C25 55 35 65 45 70C40 75 30 80 20 85L25 90C35 85 45 80 50 75C55 80 65 85 75 90L80 85C70 80 60 75 55 70C65 65 75 55 75 40C75 25 65 10 50 10Z" />
-                </svg>
-            </div>
+        <h1 class="names">
+            Ettaboina Ushasri
+            <em>&amp;</em>
+            Teegala Anish
+        </h1>
 
-            <p class="sans uppercase tracking-[0.3em] text-xs font-semibold text-amber-700">We invite you to celebrate
-                the wedding of</p>
-
-            <h1 class="heading text-4xl md:text-6xl text-amber-900 leading-tight">Ettaboina Ushasri<br><span
-                    class="text-2xl lowercase italic block my-2 font-serif text-amber-600">&</span>Teegala Anish</h1>
-
-            <p class="text-lg text-stone-600 max-w-sm mx-auto italic">
-                Seek your blessings as they unite in sacred marriage
-            </p>
+        <div class="divider-ornament" style="animation-delay:.55s">
+            <span></span>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="3" fill="#C9973A"/>
+                <circle cx="10" cy="10" r="7" stroke="#C9973A" stroke-width=".8" opacity=".4"/>
+            </svg>
+            <span></span>
         </div>
+
+        <p class="tagline">Seek your blessings as they unite in sacred marriage</p>
     </div>
 
-    <!-- Countdown -->
-    <div class="bg-amber-50/50 py-16 px-6 text-center">
-        <h3 class="sans uppercase tracking-widest text-sm mb-8 text-stone-500">The Big Day</h3>
-        <div class="grid grid-cols-4 gap-2 max-w-sm mx-auto" id="timer">
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
-                <div id="days" class="text-2xl font-bold text-amber-800">00</div>
-                <div class="text-[10px] uppercase text-stone-400">Days</div>
+    <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-dot"></div>
+    </div>
+</section>
+
+<!-- ═══════════════ COUNTDOWN ═══════════════ -->
+<div class="countdown-wrap">
+    <div class="countdown-inner">
+        <span class="section-label">Counting down to</span>
+        <h2 class="section-title">The Auspicious Day</h2>
+        <div class="gold-line"></div>
+
+        <div class="timer-grid">
+            <div class="timer-cell">
+                <span class="timer-num" id="days">00</span>
+                <span class="timer-label">Days</span>
             </div>
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
-                <div id="hours" class="text-2xl font-bold text-amber-800">00</div>
-                <div class="text-[10px] uppercase text-stone-400">Hrs</div>
+            <div class="timer-cell">
+                <span class="timer-num" id="hours">00</span>
+                <span class="timer-label">Hours</span>
             </div>
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
-                <div id="minutes" class="text-2xl font-bold text-amber-800">00</div>
-                <div class="text-[10px] uppercase text-stone-400">Min</div>
+            <div class="timer-cell">
+                <span class="timer-num" id="minutes">00</span>
+                <span class="timer-label">Mins</span>
             </div>
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
-                <div id="seconds" class="text-2xl font-bold text-amber-800">00</div>
-                <div class="text-[10px] uppercase text-stone-400">Sec</div>
+            <div class="timer-cell">
+                <span class="timer-num" id="seconds">00</span>
+                <span class="timer-label">Secs</span>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Details -->
-    <div class="py-20 px-6 text-center space-y-12">
-        <div>
-            <h4 class="heading text-xl text-amber-900 mb-2">When</h4>
-            <p class="text-xl">Sunday, 26 April 2026</p>
-            <p class="text-stone-500">at 10:19 AM (Muhurtham)</p>
-        </div>
+<!-- ═══════════════ EVENTS ═══════════════ -->
+<section class="section">
+    <span class="section-label">Schedule of celebrations</span>
+    <h2 class="section-title">Join Us</h2>
+    <div class="gold-line"></div>
 
-        <div>
-            <h4 class="heading text-xl text-amber-900 mb-2">Where</h4>
-            <p class="font-bold">South Central Railway Community Hall</p>
-            <p>Near Kazipet Railway Station</p>
-            <p class="mb-6">Telangana, 506003</p>
+    <div class="event-card">
+        <div class="event-icon">🌸</div>
+        <div class="event-name">Wedding Ceremony</div>
+        <div class="event-date">Sunday, 26 April 2026</div>
+        <div class="event-time">10:19 AM onwards</div>
+        <span class="muhurtham-badge">✦ Muhurtham ✦</span>
+    </div>
+</section>
 
-            <a href="https://www.google.com/maps/search/South+Central+Railway+Community+Hall+Kazipet"
-                class="inline-block bg-amber-800 text-white px-8 py-3 rounded-full sans text-sm tracking-widest hover:bg-amber-900 transition-colors shadow-md">
-                GET DIRECTIONS
-            </a>
-            <iframe class="mt-6 rounded-lg shadow-lg flex-1 mx-auto"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30361.37229761993!2d79.50086772042073!3d17.970754564565713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a334e35dfe43e25%3A0xc4cd004de6cbedee!2sSouth%20Central%20Railway%20Community%20Hall!5e0!3m2!1sen!2sin!4v1776481917271!5m2!1sen!2sin"
-                width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+<!-- ═══════════════ VENUE ═══════════════ -->
+<section class="section" style="padding-top:0">
+    <span class="section-label">Venue</span>
+    <h2 class="section-title">Where to Find Us</h2>
+    <div class="gold-line"></div>
+
+    <div class="venue-block">
+        <div class="venue-name">South Central Railway<br>Community Hall</div>
+        <p class="venue-addr">
+            Near Kazipet Railway Station<br>
+            Warangal, Telangana – 506 003
+        </p>
+        <a href="https://www.google.com/maps/search/South+Central+Railway+Community+Hall+Kazipet" class="btn-gold">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+            Get Directions
+        </a>
     </div>
 
-    <script>
-        const weddingDate = new Date("April 26, 2026 10:19:00").getTime();
+    <div class="map-frame">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30361.37229761993!2d79.50086772042073!3d17.970754564565713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a334e35dfe43e25%3A0xc4cd004de6cbedee!2sSouth%20Central%20Railway%20Community%20Hall!5e0!3m2!1sen!2sin!4v1776481917271!5m2!1sen!2sin"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
 
-        setInterval(function () {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+<!-- ═══════════════ BLESSING ═══════════════ -->
+<div class="blessing-wrap">
+    <span class="section-label">With love &amp; blessings from</span>
+    <h2 class="section-title" style="margin-bottom:24px">Our Families</h2>
+    <div class="gold-line"></div>
 
-            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
-        }, 1000);
-    </script>
+    <p class="blessing-text">
+        "May this union be filled with joy, laughter, and a lifetime of love."
+    </p>
+
+    <div class="families">
+        <div class="family-col">
+            <div class="family-side">Bride's Family</div>
+            <div class="family-name">Ettaboina<br>Family</div>
+        </div>
+        <div class="family-divider"></div>
+        <div class="family-col">
+            <div class="family-side">Groom's Family</div>
+            <div class="family-name">Teegala<br>Family</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+    <svg class="footer-ornament" width="60" height="20" viewBox="0 0 120 30" fill="none">
+        <path d="M0 15 Q30 5 60 15 Q90 25 120 15" stroke="#C9973A" stroke-width="1" opacity=".5"/>
+        <circle cx="60" cy="15" r="3" fill="#C9973A" opacity=".6"/>
+        <circle cx="30" cy="10" r="1.5" fill="#C9973A" opacity=".4"/>
+        <circle cx="90" cy="20" r="1.5" fill="#C9973A" opacity=".4"/>
+    </svg>
+    <p>Ushasri &amp; Anish · 26 April 2026 · Kazipet, Telangana</p>
+</footer>
+
+<script>
+    const weddingDate = new Date("April 26, 2026 10:19:00").getTime();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+        const dist = weddingDate - Date.now();
+        if (dist <= 0) {
+            document.querySelector('.countdown-wrap').innerHTML =
+                '<p style="text-align:center;font-family:IM Fell English,serif;font-size:28px;color:#5C2E0E;padding:60px 24px">Today is the day! 🌸</p>';
+            return;
+        }
+        document.getElementById('days').textContent    = pad(Math.floor(dist / 86400000));
+        document.getElementById('hours').textContent   = pad(Math.floor(dist % 86400000 / 3600000));
+        document.getElementById('minutes').textContent = pad(Math.floor(dist % 3600000 / 60000));
+        document.getElementById('seconds').textContent = pad(Math.floor(dist % 60000 / 1000));
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Intersection-based reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: .15 });
+
+    document.querySelectorAll('.event-card, .venue-block, .families, .map-frame').forEach(el => {
+        el.style.cssText += 'opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;';
+        observer.observe(el);
+    });
+</script>
+
 </body>
-
 </html>
